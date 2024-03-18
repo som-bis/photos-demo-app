@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NavigationEnd, Router } from '@angular/router';
+import { LandingService } from './landing.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AuthService {
   private albumDetailsKey = 'albumDetails';
   userDataChanged: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private snackBar: MatSnackBar, private router: Router) {
+  constructor(private router: Router, private landingService: LandingService) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.userDataChanged.emit();
@@ -29,9 +30,7 @@ export class AuthService {
 
       localStorage.setItem(this.userKey, JSON.stringify(user));
 
-      this.snackBar.open('Login successful!', 'Dismiss', {
-        duration: 3000,
-      });
+      this.landingService.showSuccess('Login successful!');
 
       return true;
     } else {

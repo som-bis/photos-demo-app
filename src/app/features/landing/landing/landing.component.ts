@@ -32,6 +32,7 @@ export class LandingComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching photos:', error);
+        this.landingService.showError('Error fetching photos!');
       }
     );
   }
