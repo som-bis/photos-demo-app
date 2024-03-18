@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +8,15 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private authTokenKey = 'authToken';
   private userKey = 'user';
-  constructor() {}
+  userDataChanged: EventEmitter<void> = new EventEmitter<void>();
+
+  constructor(private snackBar: MatSnackBar, private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.userDataChanged.emit();
+      }
+    });
+  }
 
   login(email: string, mobile: string): boolean {
     if (email !== '' && mobile !== '') {
@@ -14,9 +24,13 @@ export class AuthService {
 
       localStorage.setItem(this.authTokenKey, token);
 
-      const user = { email, mobile, name: 'John Doe' };
+      const user = { email, mobile, name: email.substring(0, email.indexOf('@')) };
 
       localStorage.setItem(this.userKey, JSON.stringify(user));
+
+      this.snackBar.open('Login successful!', 'Dismiss', {
+        duration: 3000,
+      });
 
       return true;
     } else {

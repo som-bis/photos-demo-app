@@ -8,11 +8,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JwtModule } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { LogoutComponent } from './core/logout/logout/logout.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    HeaderComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +29,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
         tokenGetter: () => localStorage.getItem('authToken')
       }
     }),
-    HttpClientModule
+    HttpClientModule,
+    MatCardModule,
+    MatSnackBarModule
   ],
   providers: [
     provideAnimationsAsync()
