@@ -8,6 +8,7 @@ import { NavigationEnd, Router } from '@angular/router';
 export class AuthService {
   private authTokenKey = 'authToken';
   private userKey = 'user';
+  private albumDetailsKey = 'albumDetails';
   userDataChanged: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private snackBar: MatSnackBar, private router: Router) {
@@ -41,6 +42,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem(this.authTokenKey);
     localStorage.removeItem(this.userKey);
+    localStorage.removeItem(this.albumDetailsKey);
   }
 
   isAuthenticated(): boolean {

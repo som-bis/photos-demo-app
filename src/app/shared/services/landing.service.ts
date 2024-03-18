@@ -8,19 +8,20 @@ import { Photo } from '../models/photo.model';
 })
 export class LandingService {
   private apiUrl = 'https://jsonplaceholder.typicode.com/photos';
-  albumDetails!: Photo[];
+  private albumDetailsKey = 'albumDetails';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getPhotos(): Observable<Photo[]> {
     return this.http.get<Photo[]>(this.apiUrl);
   }
 
   setAlbumDetails(albumDetails: Photo[]): void {
-    this.albumDetails = albumDetails;
+    localStorage.setItem(this.albumDetailsKey, JSON.stringify(albumDetails));
   }
 
-  getAlbumDetails(): any[] {
-    return this.albumDetails;
+  getAlbumDetails(): Photo[] | null {
+    const albumDetailsString = localStorage.getItem(this.albumDetailsKey);
+    return albumDetailsString ? JSON.parse(albumDetailsString) : null;
   }
 }

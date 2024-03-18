@@ -10,9 +10,10 @@ import { PhotoDialogComponent } from '../../photo-dialog/photo-dialog/photo-dial
   templateUrl: './album-details.component.html',
   styleUrl: './album-details.component.scss'
 })
+
 export class AlbumDetailsComponent implements OnInit {
   albumId!: number;
-  albumDetails!: Photo[];
+  albumDetails: Photo[] = [];
 
   constructor(private route: ActivatedRoute, private landingService: LandingService,
     private dialog: MatDialog) { }
@@ -22,9 +23,13 @@ export class AlbumDetailsComponent implements OnInit {
       this.albumId = params['id'];
     });
 
-    this.albumDetails = this.landingService.getAlbumDetails();
-
-    console.log(this.albumDetails);
+    const storedAlbumDetails = this.landingService.getAlbumDetails();
+    if (storedAlbumDetails) {
+      this.albumDetails = storedAlbumDetails;
+      console.log(this.albumDetails);
+    } else {
+      console.log('Album details not found.');
+    }
   }
 
   openDialog(photo: any): void {
