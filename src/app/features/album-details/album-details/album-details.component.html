@@ -1,0 +1,10 @@
+<div class="grid-container">
+    <div class="grid-item" *ngFor="let photo of albumDetails" (click)="openDialog(photo)">
+        <mat-card>
+            <img mat-card-image [src]="photo.thumbnailUrl" alt="{{ photo.title }}">
+            <mat-card-content [matTooltip]="photo.title" matTooltipPosition="above">
+                <p>{{ photo.title }}</p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
