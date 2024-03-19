@@ -21,6 +21,7 @@ mat-card {
 
 mat-card:hover {
     transform: rotateY(10deg) scale(1.05);
+    cursor: pointer;
 }
 
 mat-card-content {
